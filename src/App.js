@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import Formcomp from './components/Formcomp';
+import React, { useState } from 'react'
+import Table from './components/Table';
 
 function App() {
+  let [data, setdata] = useState({name: '',
+  dateOfBirth: '',
+  bloodGroup: '',
+  address: '',
+  age:'',
+  });
+  const getData=(vals)=>{
+    // console.log(vals)
+    const dob = new Date(vals.dateOfBirth);
+    const month_diff = Date.now() - dob.getTime();
+    const age_dt = new Date(month_diff);
+    const year = age_dt.getUTCFullYear();
+    const age_cal = Math.abs(year - 1970);
+    setdata(data={name: vals.name,
+    dateOfBirth: vals.dateOfBirth,
+    bloodGroup: vals.bloodGroup,
+    address: vals.address,
+  age:age_cal});
+    console.log(data);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Formcomp getData={getData}/>
+      <Table Data={data}/>
     </div>
   );
 }
